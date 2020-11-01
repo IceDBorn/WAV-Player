@@ -24,6 +24,7 @@ public class PlayingTimer extends Thread {
 
     public void setAudioPlayer(Player audioPlayer) {
         this.audioPlayer = audioPlayer;
+        isPause = false;
     }
 
     public void setMouseDown(boolean mouseDown) {

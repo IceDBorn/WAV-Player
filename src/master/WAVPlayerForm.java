@@ -11,113 +11,161 @@ import javax.swing.*;
 
 public class WAVPlayerForm extends javax.swing.JFrame {
 
-    // Δημιουργεί αντικείμενο αρχείου.
+    // Δημιουργεί αντικείμενο αρχείου
     File selectedFile;
 
-    // Δημιουργεί λίστα αρχείων.
+    // Δημιουργεί λίστα αρχείων
     ArrayList<FileInfo> files = new ArrayList<>();
 
-    // Δημιουργεί λίστα.
+    // Δημιουργεί λίστα
     DefaultListModel fileListModel = new DefaultListModel();
 
-    // Δημιουργεί νεο Player αντικείμενο.
+    // Δημιουργεί νεο Player αντικείμενο
     Player player;
 
-    /* Δημιουργεί ακέραιο που αποθηκεύει την θέση του τελευταίου αρχείου που
-    αναπαράχθηκε απο την λίστα. */
+    // Δημιουργεί ακέραιο που αποθηκεύει την θέση του τελευταίου αρχείου που αναπαράχθηκε απο την λίστα
     int lastPlayedIndex;
 
+    // Δημιουργεί String που αποθηκεύει το κείμενο που είχε το κουμπί playButton κάθε φορά που πατάς κλικ σε αυτό
     String lastPlayedText = "Play Song";
 
+    // Δημιουργεί νεο PlayingTimer αντικείμενο
     PlayingTimer timer;
 
-    // Δημιουργία του JForm.
+    // Δημιουργία του JForm και αρχικοποίηση του timer
     public WAVPlayerForm() {
         initComponents();
         fileList.setModel(fileListModel);
         timer = new PlayingTimer(startLabel, timerSlider, playButton, player);
     }
 
-    private void fileChooserButtonMouseClicked() {//GEN-FIRST:event_fileChooserButtonMouseClicked
-        /* Αποθηκεύει στο selectedFile το αρχείο που θα ανοίξει ο επιλογέας 
-        αρχείου. */
+    private void fileChooserButtonMouseClicked() {
+        // Αποθηκεύει στο selectedFile το αρχείο που θα ανοίξει ο επιλογέας αρχείου
         selectedFile = FileChooser.Choose();
 
+        // Αν δεν επιλέχθηκε αρχείο, τελειώνει η μέθοδος
         if (selectedFile == null) return;
 
+        // Δημιουργεί νεο αντικείμενο FileInfo απο το selectedFile
         FileInfo file = new FileInfo(selectedFile);
-        // Αποθηκεύει το selectedFile στη λίστα αρχείων files.
+
+        // Αποθηκεύει το file στη λίστα αρχείων files
         files.add(file);
 
-        // Σβήνει όλα τα υπάρχοντα στοιχεία απο το fileListModel.
+        // Σβήνει όλα τα υπάρχοντα στοιχεία απο το fileListModel
         fileListModel.removeAllElements();
 
-        // Προσθέτει όλα τα στοιχεία της λίστας files στο fileListModel.
+        // Προσθέτει όλα τα στοιχεία της λίστας files στο fileListModel
         fileListModel.addAll(files);
 
-        // Προσθέτει τα στοιχεία της fileListModel στη fileList.
+        // Προσθέτει τα στοιχεία της fileListModel στη fileList
         fileList.setModel(fileListModel);
-    }//GEN-LAST:event_fileChooserButtonMouseClicked
+    }
 
-    private void clearButtonMouseClicked() {//GEN-FIRST:event_clearButtonMouseClicked
-        // Σταματάει την αναπαραγωγή
+    private void clearButtonMouseClicked() {
+        // Σταματάει την αναπαραγωγή αν ο player δεν είναι κενός
         if (player != null) {
             player.stop();
         }
-        // Καθαρίζει την λίστα με τα αρχεία files.
+
+        // Καθαρίζει την λίστα με τα αρχεία files
         files.clear();
-        // Καθαρίζει το fileListModel.
+
+        // Καθαρίζει το fileListModel
         fileListModel.removeAllElements();
-        // Προσθέτει την άδεια λίστα στην Jlist fileList.
+
+        // Προσθέτει την άδεια λίστα στην Jlist fileList
         fileList.setModel(fileListModel);
+
         // Αφαίρεση του lastPlayedIndex
         lastPlayedIndex = -1;
-        startLabel.setText("00:00:00");
-        endLabel.setText("00:00:00");
-        timerSlider.setValue(0);
-        playButton.setText("Play Song");
-    }//GEN-LAST:event_clearButtonMouseClicked
 
-    private void playButtonMouseClicked() {//GEN-FIRST:event_playButtonMouseClicked
-        /* Αν δεν έχει  δημιουργηθεί player, τότε δημιουργεί έναν και κάνει
-        αναπαραγωγή του αρχείου ήχου. */
+        // Αρχικοποιεί το startLabel
+        startLabel.setText("00:00:00");
+
+        // Αρχικοποιεί το endLabel
+        endLabel.setText("00:00:00");
+
+        // Αρχικοποιεί την τιμή του timerSlider
+        timerSlider.setValue(0);
+
+        // Αρχικοποιεί την μέγιστη τιμή που μπορεί να δεχτεί το timerSlider
+        timerSlider.setMaximum(0);
+
+        // Αρχικοποιεί το playButton
+        playButton.setText("Play Song");
+    }
+
+    private void playButtonMouseClicked() {
+        // Αν δεν έχει  δημιουργηθεί player, τότε δημιουργεί έναν και κάνει αναπαραγωγή του αρχείου wave
         if (player == null) {
             try {
+                /* Δημιουργεί νέο player διαλέγοντας το αρχείο απο την λίστα files σύμφωνα με την επιλεγμένη επιλογή
+                απο το fileList */
                 player = new Player(files.get(fileList.getSelectedIndex()));
+
+                // Αλλάζει το κείμενο του playButton σε Play Song
                 this.playButton.setText("Play Song");
+
+                // Θέτει το lastPlayedText ως Play Song
                 lastPlayedText = "Play Song";
+
+                // Θέτει το endLabel ως το μήκος του wave αρχείου σε μορφή ΩΩ:ΛΛ:ΔΔ
                 this.endLabel.setText(player.getClipLengthString());
+
+                /* Θέτει την μέγιστη τιμή του timerSlider στο μήκος του wave αρχείου διά ενα εκατομμύριο για μετατροπή
+                σε δευτερόλεπτα */
                 this.timerSlider.setMaximum((int) player.getClipLength() / 1_000_000);
+
+                // Θέτει τον player που θα ακολουθεί ο PlayingTimer timer
                 timer.setAudioPlayer(player);
+
+                // Ξεκινάει τον timer
                 timer.start();
             } catch (UnsupportedAudioFileException | IOException |
                     LineUnavailableException ex) {
                 Logger.getLogger(WAVPlayerForm.class.getName()).
                         log(Level.SEVERE, null, ex);
             }
+
+            // Ξεκινάει την αναπαραγωγή του αρχείου
             player.play();
-            // Αλλάζει το κείμενο του κουμπιού playButton σε Pause Song.
+
+            // Αλλάζει το κείμενο του κουμπιού playButton σε Pause Song
             this.playButton.setText("Pause Song");
+
+            // Αλλάζει το κείμενο του lastPlayedText σε Pause Song
             lastPlayedText = "Pause Song";
         }
         /* Αν υπάρχει ο player και αναπαράγει ένα αρχείο τότε σταματάει την
-        αναπαραγωγή κρατώνας την τρέχουσα θέση του clip. */
+        αναπαραγωγή κρατώνας την τρέχουσα θέση του clip */
         else if (player.getStatus().equals("playing") && lastPlayedIndex == fileList.getSelectedIndex()) {
+            // Παύει την αναπαραγωγή του αρχείου
             player.pause();
+
+            // Παύει τον timer
             timer.pauseTimer();
-            // Αλλάζει το κείμενο του κουμπιού playButton σε Resume.
+
+            // Αλλάζει το κείμενο του κουμπιού playButton σε Resume
             this.playButton.setText("Resume Song");
+
+            // Αλλάζει το lastPlayedText σε Resume Song
             lastPlayedText = "Resume Song";
         }
-        /* Αλλιώς αν ο player δεν αναπαράγει κάποιο αρχείο αλλά έχει κάνει παύση
-        κάποια αναπαραγωγή αρχείου, τότε το συνεχίζει απο το σημείο που
-        είχε σταματήσει η αναπαραγωγή. */
+        /* Αλλιώς αν ο player δεν αναπαράγει κάποιο αρχείο αλλά έχει κάνει παύση κάποια αναπαραγωγή αρχείου,
+        τότε συνεχίζει  την αναπαραγωγή απο το σημείο όπου είχε σταματήσει */
         else if (player.getStatus().equals("paused") && lastPlayedIndex == fileList.getSelectedIndex()) {
             try {
+                // Ξεκινάει την αναπαραγωγή
                 player.resumeAudio();
+
+                // Ξεκινάει τον timer
                 timer.resumeTimer();
+
                 // Αλλάζει το κείμενο του κουμπιού playButton σε Pause Song.
                 this.playButton.setText("Pause Song");
+
+                // Αλλάζει το lastPlayedText σε Pause Song
                 lastPlayedText = "Pause Song";
             } catch (UnsupportedAudioFileException | IOException |
                     LineUnavailableException ex) {
