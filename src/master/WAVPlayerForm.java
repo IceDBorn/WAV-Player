@@ -1,5 +1,4 @@
 package master;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +31,9 @@ public class WAVPlayerForm extends javax.swing.JFrame {
 
     // Δημιουργεί νεο PlayingTimer αντικείμενο
     PlayingTimer timer;
+
+    // Σταθερά για την μετατροπή των μικροδευτερόλεπτων σε δευτερόλεπτα
+    private static final int MICROSECONDS_TO_SECONDS = 1_000_000;
 
     // Δημιουργία του JForm και αρχικοποίηση του timer
     public WAVPlayerForm() {
@@ -116,12 +118,12 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                     // Θέτει το endLabel ως το μήκος του wave αρχείου σε μορφή ΩΩ:ΛΛ:ΔΔ
                     this.endLabel.setText(player.getClipLengthString());
 
-                    /* Θέτει την μέγιστη τιμή του timerSlider στο μήκος του wave αρχείου διά ενα εκατομμύριο για μετατροπή
-                    σε δευτερόλεπτα */
-                    this.timerSlider.setMaximum((int) player.getClipLength() / 1_000_000);
+                    /* Θέτει την μέγιστη τιμή του timerSlider στο μήκος του wave αρχείου διά ενα εκατομμύριο για
+                    μετατροπή σε δευτερόλεπτα */
+                    this.timerSlider.setMaximum((int) player.getClipLength() / MICROSECONDS_TO_SECONDS);
 
                     // Θέτει τον player που θα ακολουθεί ο PlayingTimer timer
-                    timer.setAudioPlayer(player);
+                    timer.setPlayer(player);
 
                     // Ξεκινάει τον timer
                     timer.start();
@@ -240,8 +242,8 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         try {
             if (timerSlider.isEnabled()) {
                 if (timer.isAlive()) {
-                    // Μετατρέπει την τιμή του timerSlider απο δευτερόλεπτα σε Μιλιδευτερόλεπτα
-                    timer.jump((long) timerSlider.getValue() * 1_000_000);
+                    // Μετατρέπει την τιμή του timerSlider απο δευτερόλεπτα σε μικροδευτερόλεπτα
+                    timer.jump((long) timerSlider.getValue() * MICROSECONDS_TO_SECONDS);
                 }
             }
         } catch (UnsupportedAudioFileException | IOException |
@@ -279,7 +281,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
             timer.jump(0);
             // Δημιουργεί νέο player με το επιλεγμένο αρχείο.
             player = new Player(files.get(fileList.getSelectedIndex()));
-            timer.setAudioPlayer(player);
+            timer.setPlayer(player);
             // Κάνει αναπαραγωγή του νέου αρχείου.
             player.play();
             // Αλλάζει το κείμενο του κουμπιού playButton σε Pause Song.
@@ -293,7 +295,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
 
             /* Θέτει την μέγιστη τιμή του timerSlider στο μήκος του wave αρχείου διά ενα εκατομμύριο για μετατροπή
             σε δευτερόλεπτα */
-            this.timerSlider.setMaximum((int) player.getClipLength() / 1_000_000);
+            this.timerSlider.setMaximum((int) player.getClipLength() / MICROSECONDS_TO_SECONDS);
 
             // Θέτει το lastPlayedIndex ως το αρχείο που αναπαράχθηκε
             lastPlayedIndex = fileList.getSelectedIndex();

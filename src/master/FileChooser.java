@@ -7,39 +7,38 @@ import javax.swing.filechooser.FileSystemView;
 public class FileChooser {
     
     public static File Choose() {
-        // Δημιουργεί επιλογέα αρχείου.
+        // Δημιουργεί επιλογέα αρχείου
         JFileChooser fileChooser = new JFileChooser(FileSystemView.
                 getFileSystemView().getHomeDirectory());
         
+        // Θέτει τον τίτλο του fileChooser σε Add wav audio file
         fileChooser.setDialogTitle("Add wav audio file");
         
-        // Δημιουργεί φίλτρο αρχείων που δέχεται μόνο .wav αρχεία.
+        // Δημιουργεί φίλτρο αρχείων που δέχεται μόνο .wav αρχεία
         FileNameExtensionFilter filter = new 
         FileNameExtensionFilter(".wav audio files", "wav", "wave");
         
-        // Απενεργοποιεί την επιλογή επιλογής κάθε αρχείου.
+        // Απενεργοποιεί την επιλογή επιλογής κάθε αρχείου
         fileChooser.setAcceptAllFileFilterUsed(false);
         
-        // Προσθέτει το φίλτρο αρχείων στον επιλογέα αρχείου.
+        // Προσθέτει το φίλτρο αρχείων στον επιλογέα αρχείου
         fileChooser.setFileFilter(filter);
         
-        // Φέρνει τον επιλογέα αρχείου στο παρασκήνιο.
+        // Φέρνει τον επιλογέα αρχείου στο παρασκήνιο
         fileChooser.setVisible(true);
         
-        // Δηιουργεί ένα αντικείμενο αρχείου.
+        // Δηιουργεί ένα αντικείμενο αρχείου
         File selectedFile = null;
         
-        /* Δημιουργεί έναν ακέραιο με τον οποίο ελέγχουμε αν ο χρήστης πάτησε 
-        Open παρακάτω. */
+        // Δημιουργεί έναν ακέραιο με τον οποίο ελέγχουμε αν ο χρήστης πάτησε Open παρακάτω
         int returnValue = fileChooser.showOpenDialog(null);
         
-        /* Αν ο χρήστης πάτησε άνοιγμα τότε το αρχείο αποθηκεύεται στο 
-        selectedFile. */
+        // Αν ο χρήστης πάτησε άνοιγμα τότε το αρχείο αποθηκεύεται στο selectedFile
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();
 	}
         
-        // Επιστρέφει το αρχείο selectedFile.
+        // Επιστρέφει το αρχείο selectedFile
         return selectedFile;
 
     }

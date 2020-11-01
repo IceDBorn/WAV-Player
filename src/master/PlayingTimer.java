@@ -12,30 +12,30 @@ import javax.swing.JSlider;
 
 public class PlayingTimer extends Thread {
     private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-    private boolean isPause = false;
+    private boolean pause = false;
     private long startTime;
     private long pauseTime;
     private boolean mouseDown = false;
 
-    private final JLabel labelRecordTime;
-    private final JSlider slider;
-    private final JButton play;
-    private Player audioPlayer;
+    private final JLabel startLabel;
+    private final JSlider timerSlider;
+    private final JButton playButton;
+    private Player player;
 
-    public void setAudioPlayer(Player audioPlayer) {
-        this.audioPlayer = audioPlayer;
-        isPause = false;
+    public void setPlayer(Player player) {
+        this.player = player;
+        pause = false;
+    }
+
+    PlayingTimer(JLabel labelRecordTime, JSlider slider, JButton play, Player audioPlayer) {
+        this.startLabel = labelRecordTime;
+        this.timerSlider = slider;
+        this.playButton = play;
+        this.player = audioPlayer;
     }
 
     public void setMouseDown(boolean mouseDown) {
         this.mouseDown = mouseDown;
-    }
-
-    PlayingTimer(JLabel labelRecordTime, JSlider slider, JButton play, Player audioPlayer) {
-        this.labelRecordTime = labelRecordTime;
-        this.slider = slider;
-        this.play = play;
-        this.audioPlayer = audioPlayer;
     }
 
     public void run() {
@@ -45,31 +45,31 @@ public class PlayingTimer extends Thread {
         while (true) {
             try {
                 sleep(100);
-                if (audioPlayer.clip.getMicrosecondPosition() != audioPlayer.clip.getMicrosecondLength()) {
-                    if (!isPause) {
-                        if (audioPlayer.clip != null && audioPlayer.clip.isRunning() && !mouseDown) {
-                            if (!slider.isEnabled()) {
-                                slider.setEnabled(true);
+                if (player.clip.getMicrosecondPosition() != player.clip.getMicrosecondLength()) {
+                    if (!pause) {
+                        if (player.clip != null && player.clip.isRunning() && !mouseDown) {
+                            if (!timerSlider.isEnabled()) {
+                                timerSlider.setEnabled(true);
                             }
-                            labelRecordTime.setText(toTimeString());
-                            int currentSecond = (int) audioPlayer.clip.getMicrosecondPosition() / 1_000_000;
-                            slider.setValue(currentSecond);
+                            startLabel.setText(toTimeString());
+                            int currentSecond = (int) player.clip.getMicrosecondPosition() / 1_000_000;
+                            timerSlider.setValue(currentSecond);
                         }
                     } else {
                         pauseTime += 100;
-                        if (slider.isEnabled()) {
-                            slider.setEnabled(false);
+                        if (timerSlider.isEnabled()) {
+                            timerSlider.setEnabled(false);
                         }
                     }
                 }
                 else {
-                    slider.setValue(0);
+                    timerSlider.setValue(0);
                     startTime = System.currentTimeMillis();
-                    audioPlayer.setStatus("ended");
-                    labelRecordTime.setText("00:00:00");
-                    play.setText("Play Song");
-                    if (slider.isEnabled()) {
-                        slider.setEnabled(false);
+                    player.setStatus("ended");
+                    startLabel.setText("00:00:00");
+                    playButton.setText("Play Song");
+                    if (timerSlider.isEnabled()) {
+                        timerSlider.setEnabled(false);
                     }
                 }
             } catch (InterruptedException ignored) {
@@ -78,11 +78,11 @@ public class PlayingTimer extends Thread {
     }
 
     void pauseTimer() {
-        isPause = true;
+        pause = true;
     }
 
     void resumeTimer() {
-        isPause = false;
+        pause = false;
     }
 
     private String toTimeString() {
@@ -96,6 +96,6 @@ public class PlayingTimer extends Thread {
         long now = System.currentTimeMillis();
         long current = now - startTime - pauseTime;
         pauseTime += current - c / 1_000;
-        audioPlayer.jump(c);
+        player.jump(c);
     }
 }

@@ -15,17 +15,13 @@ public class FileInfo {
     public File getFile() {
         return file;
     }
-
-    public Long getLength() {
-        return file.length();
-    }
     
     /* Μέθοδος για να μας επιστρέφει το όνομα του αρχείου όταν 
-    χρησιμοποιούμαι το file σε string. */
+    χρησιμοποιούμαι το file σε string */
     @Override
     public String toString() {
         /* Χρησιμοποιώντας regular expression κρατάει μόνο το κομμάτι χωρίς το 
-        extension του αρχείου. */
+        extension του αρχείου */
         return this.file.getName().replaceFirst("[.][^.]+$", "");
     }
 }
