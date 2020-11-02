@@ -26,6 +26,7 @@ public class Player {
     private static final int MINUTES_TO_SECONDS = 60;
     private static final int MICROSECONDS_TO_SECONDS = 1_000_000;
 
+    // Constructor του Player
     public Player(FileInfo file) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         // Προσθέτουμε το αρχείο που είναι επιλεγμένο στη λίστα στο audioInputStream
         audioInputStream = AudioSystem.getAudioInputStream(file.getFile());
@@ -40,6 +41,8 @@ public class Player {
         clip.open(audioInputStream);
     }
 
+    // Μέθοδοι
+
     // Μέθοδος για να επιστραφεί η κατάσταση της αναπαραγωγής
     public String getStatus() {
         return status;
@@ -50,6 +53,7 @@ public class Player {
         return clip.getMicrosecondLength();
     }
 
+    // Μέθοδος όπου θέτει το status
     public void setStatus(String status) {
         this.status = status;
     }

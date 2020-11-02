@@ -29,8 +29,8 @@ public class WAVPlayerForm extends javax.swing.JFrame {
     // Δημιουργεί String που αποθηκεύει το κείμενο που είχε το κουμπί playButton κάθε φορά που πατάς κλικ σε αυτό
     String lastPlayedText = "Play Song";
 
-    // Δημιουργεί νεο PlayingTimer αντικείμενο
-    PlayingTimer timer;
+    // Δημιουργεί νεο Timer αντικείμενο
+    Timer timer;
 
     // Σταθερά για την μετατροπή των μικροδευτερόλεπτων σε δευτερόλεπτα
     private static final int MICROSECONDS_TO_SECONDS = 1_000_000;
@@ -39,7 +39,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
     public WAVPlayerForm() {
         initComponents();
         fileList.setModel(fileListModel);
-        timer = new PlayingTimer(startLabel, timerSlider, playButton, player);
+        timer = new Timer(startLabel, timerSlider, playButton, player);
         timerSlider.setEnabled(false);
     }
 
@@ -122,7 +122,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                     μετατροπή σε δευτερόλεπτα */
                     this.timerSlider.setMaximum((int) player.getClipLength() / MICROSECONDS_TO_SECONDS);
 
-                    // Θέτει τον player που θα ακολουθεί ο PlayingTimer timer
+                    // Θέτει τον player που θα ακολουθεί ο Timer timer
                     timer.setPlayer(player);
 
                     // Ξεκινάει τον timer
@@ -277,13 +277,22 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         try {
             // Σταματάει την αναπαραγωγή.
             player.stop();
+
             // Επαναφέρει την θέση του timer στο 0
             timer.jump(0);
+
             // Δημιουργεί νέο player με το επιλεγμένο αρχείο.
             player = new Player(files.get(fileList.getSelectedIndex()));
+
+            // Θέτει τον player τον οποίο θα ακολουθήσει ο timer
             timer.setPlayer(player);
+
+            // Θέτει την ένταση του player
+            player.ChangeVolume(volume.getValue());
+
             // Κάνει αναπαραγωγή του νέου αρχείου.
             player.play();
+
             // Αλλάζει το κείμενο του κουμπιού playButton σε Pause Song.
             this.playButton.setText("Pause Song");
 
