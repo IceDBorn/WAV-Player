@@ -70,6 +70,10 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         // Σταματάει την αναπαραγωγή αν ο player δεν είναι κενός
         if (player != null) {
             player.stop();
+            // Αν ο timerSlider είναι ενεργοποιημένος τότε τον απενεργοποιεί
+            if (timerSlider.isEnabled()) {
+                timerSlider.setEnabled(false);
+            }
         }
 
         // Καθαρίζει την λίστα με τα αρχεία files
@@ -191,6 +195,11 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         // Σταματάει την αναπαραγωγή, αν ο player δεν είναι κενός
         if (player != null) {
             player.stop();
+
+            // Αν ο timerSlider είναι ενεργοποιημένος τότε τον απενεργοποιεί
+            if (timerSlider.isEnabled()) {
+                timerSlider.setEnabled(false);
+            }
         }
 
         // Σβήνει το τελευταίο επιλεγμένο αρχείο απο την λίστα
