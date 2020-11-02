@@ -41,11 +41,12 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         fileList.setModel(fileListModel);
         timer = new Timer(startLabel, timerSlider, playButton, player);
         timerSlider.setEnabled(false);
+        this.setLocationRelativeTo(null);
     }
 
     private void fileChooserButtonMouseClicked() {
         // Αποθηκεύει στο selectedFile το αρχείο που θα ανοίξει ο επιλογέας αρχείου
-        selectedFile = FileChooser.Choose();
+        selectedFile = FileChooser.Choose(this.getLocationOnScreen());
 
         // Αν δεν επιλέχθηκε αρχείο, τελειώνει η μέθοδος
         if (selectedFile == null) return;
@@ -330,6 +331,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
 
         JButton fileChooserButton = new JButton();
         JScrollPane playlist = new JScrollPane();
+        playlist.setWheelScrollingEnabled(false);
         fileList = new javax.swing.JList<>();
         // Variables declaration - do not modify                     
         JButton clearButton = new JButton();

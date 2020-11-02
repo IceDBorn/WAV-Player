@@ -1,15 +1,18 @@
 package master;
+import java.awt.*;
 import java.io.File;
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 public class FileChooser {
     
-    public static File Choose() {
+    public static File Choose(Point location) {
         // Δημιουργεί επιλογέα αρχείου
         JFileChooser fileChooser = new JFileChooser(FileSystemView.
                 getFileSystemView().getHomeDirectory());
+
+        fileChooser.setLocation(location);
         
         // Θέτει τον τίτλο του fileChooser σε Add wav audio file
         fileChooser.setDialogTitle("Add wav audio file");
