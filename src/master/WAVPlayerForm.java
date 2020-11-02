@@ -1,4 +1,5 @@
 package master;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
 
     private void fileChooserButtonMouseClicked() {
         // Αποθηκεύει στο selectedFile το αρχείο που θα ανοίξει ο επιλογέας αρχείου
-        selectedFile = FileChooser.Choose(this.getLocationOnScreen());
+        selectedFile = FileChooser.Choose();
 
         // Αν δεν επιλέχθηκε αρχείο, τελειώνει η μέθοδος
         if (selectedFile == null) return;
@@ -89,19 +90,19 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         // Επαναφορά του lastPlayedIndex
         lastPlayedIndex = -1;
 
-        // Αρχικοποιεί το startLabel
+        // Επαναφέρει το startLabel
         startLabel.setText("00:00:00");
 
-        // Αρχικοποιεί το endLabel
+        // Επαναφέρει το endLabel
         endLabel.setText("00:00:00");
 
-        // Αρχικοποιεί την τιμή του timerSlider
+        // Επαναφέρει την τιμή του timerSlider
         timerSlider.setValue(0);
 
-        // Αρχικοποιεί την μέγιστη τιμή που μπορεί να δεχτεί το timerSlider
+        // Επαναφέρει την μέγιστη τιμή που μπορεί να δεχτεί το timerSlider
         timerSlider.setMaximum(0);
 
-        // Αρχικοποιεί το playButton
+        // Επαναφέρει το playButton
         playButton.setText("Play Song");
     }
 
@@ -156,10 +157,10 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                 // Παύει τον timer
                 timer.pauseTimer();
 
-                // Αλλάζει το κείμενο του κουμπιού playButton σε Resume Song
+                // Θέτει το κείμενο του κουμπιού playButton σε Resume Song
                 this.playButton.setText("Resume Song");
 
-                // Αλλάζει το lastPlayedText σε Resume Song
+                // Θέτει το lastPlayedText σε Resume Song
                 lastPlayedText = "Resume Song";
             }
             /* Αλλιώς αν ο player δεν αναπαράγει κάποιο αρχείο αλλά έχει κάνει παύση κάποια αναπαραγωγή αρχείου,
@@ -172,10 +173,10 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                     // Ξεκινάει τον timer
                     timer.resumeTimer();
 
-                    // Αλλάζει το κείμενο του κουμπιού playButton σε Pause Song.
+                    // Θέτει το κείμενο του κουμπιού playButton σε Pause Song.
                     this.playButton.setText("Pause Song");
 
-                    // Αλλάζει το lastPlayedText σε Pause Song
+                    // Θέτει το lastPlayedText σε Pause Song
                     lastPlayedText = "Pause Song";
                 } catch (UnsupportedAudioFileException | IOException |
                         LineUnavailableException ex) {
@@ -221,22 +222,22 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         // Επαναφορά του lastPlayedIndex.
         lastPlayedIndex = -1;
 
-        // Αλλάζει το κείμενο του playButton σε Play Song
+        // Θέτει το κείμενο του playButton σε Play Song
         playButton.setText("Play Song");
 
-        // Αλλάζει το lastPlayedText σε Play Song
+        // Θέτει το lastPlayedText σε Play Song
         lastPlayedText = "Play Song";
 
-        // Αρχικοποιεί το startLabel
+        // Επαναφέρει το startLabel
         startLabel.setText("00:00:00");
 
-        // Αρχικοποιεί το endLabel
+        // Επαναφέρει το endLabel
         endLabel.setText("00:00:00");
 
-        // Αρχικοποιεί την τιμή του timerSlider
+        // Επαναφέρει την τιμή του timerSlider
         timerSlider.setValue(0);
 
-        //Αρχικοποιεί την μέγιστη τιμή που μπορεί να δεχθεί ο timerSlider
+        // Επαναφέρει την μέγιστη τιμή που μπορεί να δεχθεί ο timerSlider
         timerSlider.setMaximum(0);
     }
 
@@ -291,7 +292,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
             // Επαναφέρει την θέση του timer στο 0
             timer.jump(0);
 
-            // Δημιουργεί νέο player με το επιλεγμένο αρχείο.
+            // Δημιουργεί νέο player με το επιλεγμένο αρχείο
             player = new Player(files.get(fileList.getSelectedIndex()));
 
             // Θέτει τον player τον οποίο θα ακολουθήσει ο timer
@@ -300,10 +301,10 @@ public class WAVPlayerForm extends javax.swing.JFrame {
             // Θέτει την ένταση του player
             player.ChangeVolume(volume.getValue());
 
-            // Κάνει αναπαραγωγή του νέου αρχείου.
+            // Κάνει αναπαραγωγή του νέου αρχείου
             player.play();
 
-            // Αλλάζει το κείμενο του κουμπιού playButton σε Pause Song.
+            // Αλλάζει το κείμενο του κουμπιού playButton σε Pause Song
             this.playButton.setText("Pause Song");
 
             // Αλλάζει το lastPlayedText σε Pause Song
@@ -455,29 +456,50 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(playlist)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.
+                                                        LEADING)
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGap(18, 18, 18)
-                                                                .addComponent(volume, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(volumeLabel)
-                                                                .addGap(32, 32, 32))))
+                                                                .addComponent(volume,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        0, Short.MAX_VALUE))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                layout.createSequentialGroup()
+                                                                        .addPreferredGap(javax.swing.LayoutStyle.
+                                                                                        ComponentPlacement.RELATED,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                        .addComponent(volumeLabel)
+                                                                        .addGap(32, 32, 32))))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.
+                                                        LEADING)
                                                         .addComponent(playlistLabel)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(fileChooserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(fileChooserButton,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        105,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(18, 18, 18)
-                                                                .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(playButton,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        105,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(startLabel)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(timerSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(timerSlider,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        263,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.
+                                                                        ComponentPlacement.RELATED)
                                                                 .addComponent(endLabel)))
                                                 .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())
@@ -490,28 +512,39 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(playlist, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(playlist,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(timerSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.
+                                                        TRAILING)
+                                                        .addComponent(timerSlider,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(startLabel)))
                                         .addComponent(endLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26,
+                                        Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.
+                                                        BASELINE)
                                                         .addComponent(fileChooserButton)
                                                         .addComponent(playButton))
                                                 .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.
+                                                        BASELINE)
                                                         .addComponent(clearButton)
                                                         .addComponent(stopButton))
                                                 .addGap(0, 6, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.
+                                                createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(volumeLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(volume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(volume, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap())
         );
 
@@ -526,12 +559,12 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WAVPlayerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(WAVPlayerForm.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> {
-            new WAVPlayerForm().setVisible(true);
-        });
+        java.awt.EventQueue.invokeLater(() -> new WAVPlayerForm().setVisible(true));
     }
 
     private javax.swing.JLabel endLabel;

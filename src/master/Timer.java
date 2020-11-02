@@ -1,4 +1,5 @@
 package master;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,7 +22,7 @@ public class Timer extends Thread {
     // Δημιουργία πραγματικού αριθμού για την αποθήκευση του χρόνου έναρξης του timer
     private long startTime;
 
-    // Δημιουργία πραγματικού αριθμούθ για την αποθήκευση του χρόνου παύσης του timer
+    // Δημιουργία πραγματικού αριθμού για την αποθήκευση του χρόνου παύσης του timer
     private long pauseTime;
 
     // Δημιουργία boolean για τον έλεγχο της κατάστασης του κλίκ του ποντικιού πάνω στον timerSlider
@@ -59,7 +60,7 @@ public class Timer extends Thread {
 
     // Μέθοδος για έναρξη ενός thread το οποίο ανανεώνει τον timer
     public void run() {
-        // Αποθήκευει την ώρας έναρξης του timer στο startTime
+        // Αποθήκευει την ώρα έναρξης του timer στο startTime
         startTime = System.currentTimeMillis();
         // Όσο αναπαράγεται ένα αρχείο, ανανεώνει τον timer ανα δευτερόλεπτο
         while (true) {
@@ -89,7 +90,7 @@ public class Timer extends Thread {
                             timerSlider.setValue(currentSecond);
                         }
                     } else {
-                        // Αθξάνει το pauseTime κατά 100
+                        // Αυξάνει το pauseTime κατά 100
                         pauseTime += 100;
 
                         // Αν ο timerSlider είναι ενεργοποιημένος τότε τον απενεργοποιεί
@@ -97,9 +98,8 @@ public class Timer extends Thread {
                             timerSlider.setEnabled(false);
                         }
                     }
-                }
-                else {
-                    // Αρχικοποιεί τον timerSlider
+                } else {
+                    // Επαναφέρει τον timerSlider
                     timerSlider.setValue(0);
 
                     // Επαναφέρει το startTime

@@ -1,8 +1,9 @@
 package master;
+
 import java.io.File;
 
 public class FileInfo {
-    
+
     // Δημιουργία αντικείμενου αρχείου
     private final File file;
 
@@ -15,7 +16,7 @@ public class FileInfo {
     public File getFile() {
         return file;
     }
-    
+
     /* Μέθοδος για να μας επιστρέφει το όνομα του αρχείου όταν 
     χρησιμοποιούμαι το file σε string */
     @Override

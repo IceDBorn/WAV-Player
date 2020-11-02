@@ -1,11 +1,12 @@
 package master;
+
 import java.io.File;
 import java.io.IOException;
 import javax.sound.sampled.*;
 
 public class Player {
 
-    // Πραγματικός για την αποθήκευση του μικροδευτερόλεπτου της αναπαραγωγής
+    // Πραγματικός για την αποθήκευση του τωρινού μικροδευτερόλεπτου της αναπαραγωγής
     Long currentMicrosecond;
 
     // Δημιουργία αντικειμένου clip
@@ -131,7 +132,7 @@ public class Player {
         // Κλείνει το clip
         clip.close();
         // Καλεί την μέθοδο resetAudioStream
-        resetAudioStream(); 
+        resetAudioStream();
         // Θέτει την θέση αναπαραγωγής του clip στα μικροδευτερόλεπτα που αποθηκεύτηκαν κατά την παύση της αναπαραγωγής
         clip.setMicrosecondPosition(currentMicrosecond);
         // Καλεί την μέθοδο play
@@ -165,10 +166,10 @@ public class Player {
                 new File(filePath).getAbsoluteFile());
         clip.open(audioInputStream);
     }
-    
+
     // Μέθοδος για αλλαγή έντασης
     public void ChangeVolume(int value) {
         FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         volume.setValue(value);
     }
-} 
+}
