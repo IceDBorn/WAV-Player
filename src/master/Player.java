@@ -60,33 +60,48 @@ public class Player {
 
     // Μέθοδος για να επιστραφεί το String με το μήκος του αρχείου απο μικροδευτερόλεπτα σε μορφή HH:MM:SS (ΩΩ:ΛΛ:ΔΔ)
     public String getClipLengthString() {
+        // Δημιουργία String για το μήκος του αρχείου σε ΩΩ:ΛΛ:ΔΔ
         String length = "";
-        long hour = 0;
-        long minute;
+
+        // Δημιουργία πραγματικού για τις ώρες
+        long hours = 0;
+
+        // Δημιουργία πραγματικού για τα λεπτά
+        long minutes;
+
+        // Δημιουργία πραγματικού για την αποθήκευση των δευτερόλεπτων
         long seconds = clip.getMicrosecondLength() / MICROSECONDS_TO_SECONDS;
 
+        /* Αν τα δευτερόλεπτα είναι περισσότερα απο τα δευτερόλεπτα  μίας ώρας τότε αποθηκεύσει στο hours τα
+        δευτερόλεπτα διά την σταθερά μετατροπής δευτερολέπτων σε ώρες, αλλιώς θέτει τις ώρες σε 00 */
         if (seconds >= HOURS_TO_SECONDS) {
-            hour = seconds / HOURS_TO_SECONDS;
-            length = String.format("%02d:", hour);
+            hours = seconds / HOURS_TO_SECONDS;
+            length = String.format("%02d:", hours);
         } else {
             length += "00:";
         }
 
-        minute = seconds - hour * HOURS_TO_SECONDS;
+        // Αφαιρεί απο τα δευτερόλεπτα τις ώρες και τις αποθηκεύει στο minutes
+        minutes = seconds - hours * HOURS_TO_SECONDS;
 
-        if (minute >= MINUTES_TO_SECONDS) {
-            minute = minute / MINUTES_TO_SECONDS;
-            length += String.format("%02d:", minute);
+        /* Αν τα δευτερόλεπτα είναι περισσότερα απο τα δευτερόλεπτα ενός λεπτού τότε αποθηκεύσει στο minutes τα
+        δευτερόλεπτα διά την σταθερά μετατροπής δευτερολέπτων σε λεπτά, αλλιώς θέτει τα λεπτά σε 00 */
+        if (minutes >= MINUTES_TO_SECONDS) {
+            minutes = minutes / MINUTES_TO_SECONDS;
+            length += String.format("%02d:", minutes);
         } else {
-            minute = 0;
+            minutes = 0;
             length += "00:";
         }
 
-        long second = seconds - hour * HOURS_TO_SECONDS - minute *
+        // Αφαιρεί απο τα δευτερόλεπτα τις ώρες και τα λεπτά και τα αποθηκεύσει στο restSeconds
+        long restSeconds = seconds - hours * HOURS_TO_SECONDS - minutes *
                 MINUTES_TO_SECONDS;
 
-        length += String.format("%02d", second);
+        // Αποθηκεύει στο length το μήκος του αρχείου σε ΩΩ:ΛΛ:ΔΔ
+        length += String.format("%02d", restSeconds);
 
+        // Επιστρέφει το μήκος του αρχείου
         return length;
     }
 
