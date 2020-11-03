@@ -4,7 +4,7 @@ import java.io.File;
 
 public class FileInfo {
 
-    // Δημιουργία αντικείμενου αρχείου
+    // Δημιουργία αντικειμένου αρχείου
     private final File file;
 
     // Constructor για το FileInfo
@@ -17,11 +17,11 @@ public class FileInfo {
         return file;
     }
 
-    /* Μέθοδος για να μας επιστρέφει το όνομα του αρχείου όταν 
-    χρησιμοποιούμαι το file σε string */
+    /* Μέθοδος για να μας επιστραφεί το όνομα του αρχείου όταν
+    χρησιμοποιούμε το file σε string */
     @Override
     public String toString() {
-        /* Χρησιμοποιώντας regular expression κρατάει μόνο το κομμάτι χωρίς το 
+        /* Χρησιμοποιώντας regular expression κρατάει μόνο το μέρος χωρίς το
         extension του αρχείου */
         return this.file.getName().replaceFirst("[.][^.]+$", "");
     }

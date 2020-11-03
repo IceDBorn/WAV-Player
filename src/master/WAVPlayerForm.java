@@ -21,10 +21,10 @@ public class WAVPlayerForm extends javax.swing.JFrame {
     // Δημιουργεί μοντέλο λίστας
     DefaultListModel fileListModel = new DefaultListModel();
 
-    // Δημιουργεί νεο Player αντικείμενο το οποιό χρησιμοποιείται για αναπαραγωγή του αρχείου wave
+    // Δημιουργεί νέο Player αντικείμενο το οποιό χρησιμοποιείται για αναπαραγωγή του αρχείου wave
     Player player;
 
-    // Δημιουργεί ακέραιο που αποθηκεύει την θέση του τελευταίου αρχείου που αναπαράχθηκε απο την λίστα
+    // Δημιουργεί ακέραιο που αποθηκεύει τη θέση του τελευταίου αρχείου που αναπαράχθηκε απο την λίστα
     int lastPlayedIndex;
 
     // Δημιουργεί String που αποθηκεύει το κείμενο που είχε το κουμπί playButton κάθε φορά που πατάς κλικ σε αυτό
@@ -99,7 +99,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         // Επαναφέρει την τιμή του timerSlider
         timerSlider.setValue(0);
 
-        // Επαναφέρει την μέγιστη τιμή που μπορεί να δεχτεί το timerSlider
+        // Επαναφέρει την μέγιστη τιμή που μπορεί να δεχθεί το timerSlider
         timerSlider.setMaximum(0);
 
         // Επαναφέρει το playButton
@@ -107,6 +107,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
     }
 
     private void playButtonMouseClicked() {
+        // Αν έχει επιλεχθεί στοιχείο απο τη λίστα τότε συνεχίζει την εκτέλεση του παρακάτω κώδικα
         if (fileList.getSelectedIndex() != -1) {
             // Αν δεν έχει  δημιουργηθεί player, τότε δημιουργεί έναν και κάνει αναπαραγωγή του αρχείου wave
             if (player == null) {
@@ -117,9 +118,6 @@ public class WAVPlayerForm extends javax.swing.JFrame {
 
                     // Θέτει την ένταση του player σύμφωνα με την τιμή του JSlider volume
                     player.ChangeVolume(volume.getValue());
-
-                    // Θέτει το lastPlayedText ως Play Song
-                    lastPlayedText = "Play Song";
 
                     // Θέτει το endLabel ως το μήκος του wave αρχείου σε μορφή ΩΩ:ΛΛ:ΔΔ
                     this.endLabel.setText(player.getClipLengthString());
@@ -173,7 +171,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                     // Ξεκινάει τον timer
                     timer.resumeTimer();
 
-                    // Θέτει το κείμενο του κουμπιού playButton σε Pause Song.
+                    // Θέτει το κείμενο του κουμπιού playButton σε Pause Song
                     this.playButton.setText("Pause Song");
 
                     // Θέτει το lastPlayedText σε Pause Song
@@ -219,7 +217,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         // Προσθέτει το μοντέλο λίστας στην Jlist fileList
         fileList.setModel(fileListModel);
 
-        // Επαναφορά του lastPlayedIndex.
+        // Επαναφορά του lastPlayedIndex
         lastPlayedIndex = -1;
 
         // Θέτει το κείμενο του playButton σε Play Song
@@ -263,18 +261,18 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         }
     }
 
-    // Αποτρέπει τον timer να αλλάξει τιμή στον timerSlider αν το ποντίκι πατάει κλίκ
+    // Αποτρέπει τον timer να αλλάξει τιμή στον timerSlider αν το ποντίκι πατάει κλίκ πάνω σε αυτόν
     private void timerSliderMousePressed() {
         timer.setMouseDown(true);
     }
 
-    // Σταματάει να αποτρέπει τον timer να αλλάζει τιμή στον timerSlider αν το ποντίκι σταματάει να πατάει κλίκ
+    // Σταματάει να αποτρέπει τον timer να αλλάζει τιμή στον timerSlider αν το ποντίκι σταματάει να πατάει κλίκ σε αυτόν
     private void timerSliderMouseReleased() {
         timer.setMouseDown(false);
     }
 
     private void fileListMouseClicked() {
-        /* Αν το στοιχείο στο οποίο πατάς κλίκ στη λίστα είναι το αρχείο όπου κάνει αναπαραγωγή ο player τότε,
+        /* Αν το στοιχείο στο οποίο πατάς κλικ στη λίστα είναι το αρχείο όπου κάνει αναπαραγωγή ο player, τότε
         αλλάζει το κείμενο του playButton στο lastPlayedText, aλλιώς αλλάζει το κείμενο του σε Play Song */
         if (lastPlayedIndex == fileList.getSelectedIndex()) {
             playButton.setText(lastPlayedText);

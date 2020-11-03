@@ -28,16 +28,16 @@ public class Timer extends Thread {
     // Δημιουργία boolean για τον έλεγχο της κατάστασης του κλίκ του ποντικιού πάνω στον timerSlider
     private boolean mouseDown = false;
 
-    // Δημιουργία JLabel startLabel για την σύνδεση του JLabel απο την κύρια κλάση σε αυτή
+    // Δημιουργία JLabel startLabel για την σύνδεση του JLabel της κύριας κλάσης σε αυτή
     private final JLabel startLabel;
 
-    // Δημιουργία JSlider timerSlider για την σύνδεση του JSlider απο την κύρια κλάση σε αυτή
+    // Δημιουργία JSlider timerSlider για την σύνδεση του JSlider της κύριας κλάσης σε αυτή
     private final JSlider timerSlider;
 
-    // Δημιουργία JButton playButton για την σύνδεση του JButton απο την κύρια κλάση σε αυτή
+    // Δημιουργία JButton playButton για την σύνδεση του JButton της κύριας κλάσης σε αυτή
     private final JButton playButton;
 
-    // Δημιουργία Player player για την σύνδεση του Player απο την κύρια κλάση σε αυτή
+    // Δημιουργία Player player για την σύνδεση του Player της κύριας κλάσης σε αυτή
     private Player player;
 
     // Σταθερά για την μετατροπή των μικροδευτερόλεπτων σε δευτερόλεπτα
@@ -53,7 +53,7 @@ public class Timer extends Thread {
 
     // Μέθοδοι
 
-    // Μέθοδος για την αλλαγή του mouseDown απο την κύρια κλάση
+    // Μέθοδος για την αλλαγή του mouseDown
     public void setMouseDown(boolean mouseDown) {
         this.mouseDown = mouseDown;
     }
@@ -79,7 +79,7 @@ public class Timer extends Thread {
                             if (!timerSlider.isEnabled()) {
                                 timerSlider.setEnabled(true);
                             }
-                            // Θέτει το κείμενο του startLabel στη τωρινή χρονική στιγμή σε μορφή ΩΩ:ΛΛ:ΔΔ
+                            // Θέτει το κείμενο του startLabel στην τωρινή χρονική στιγμή σε μορφή ΩΩ:ΛΛ:ΔΔ
                             startLabel.setText(toTimeString());
 
                             /* Θέτει το currentSecond στη τωρινή θέση του αρχείου / 1_000_000 για μετατροπή σε
@@ -99,14 +99,14 @@ public class Timer extends Thread {
                         }
                     }
                 } else {
+                    // Θέτει το status σε ended
+                    player.setStatus("ended");
+
                     // Επαναφέρει τον timerSlider
                     timerSlider.setValue(0);
 
                     // Επαναφέρει το startTime
                     startTime = System.currentTimeMillis();
-
-                    // Θέτει το status του player σε ended
-                    player.setStatus("ended");
 
                     // Επαναφέρει το startLabel
                     startLabel.setText("00:00:00");
@@ -141,7 +141,7 @@ public class Timer extends Thread {
 
         /* Δημιουργία ημερομηνίας απο την αφαίρεση της τωρινής στιγμής, του startTime και του pauseTime για να
         υπολογιστεί πόση ώρα αναπαράγεται το αρχείο. Δηλάδή απο την τωρινή στιγμή αφαιρούμε την στιγμή που είχε
-        ξεκινήσει  η αναπαραγωγή για να βγάλουμε την διαφορά τους όπου είναι τα μιλιδευτερόλεπτα όπου αναπαράγεται το
+        ξεκινήσει  η αναπαραγωγή για να βγάλουμε την διαφορά τους που είναι τα μιλιδευτερόλεπτα όπου αναπαράγεται το
         αρχείο και αφαιρούμε και τα μιλιδευτερόλεπτα όπου είχε γίνει παύση του αρχείου για να βγεί το ακριβές
         αποτέλεσμα σε περίπτωση που είχε γίνει παύση */
         Date current = new Date(now - startTime - pauseTime);
@@ -162,7 +162,7 @@ public class Timer extends Thread {
         αναπαραγωγής και του χρόνου παύσης της αναπαραγωγής */
         long current = now - startTime - pauseTime;
 
-        // Απο το pauseTime αφαιρούμε την τωρινή στιγμή απο το jumpTime / 1_000 για μετατροπή σε μιλιδευτερόλεπτα
+        // Προσθέτουμε στο pauseTime την τωρινή στιγμή μείον το jumpTime / 1_000 για μετατροπή σε μιλιδευτερόλεπτα
         pauseTime += current - jumpTime / 1_000;
 
         // Καλεί την μέθοδο jump του player για να μεταπηδήσει στην χρονική στιγμή που δόθηκε μέσω του jumpTime

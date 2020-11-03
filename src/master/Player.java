@@ -12,7 +12,7 @@ public class Player {
     // Δημιουργία αντικειμένου clip
     Clip clip;
 
-    // String για την κατάσταση της αναπαραγωγής
+    // Δημιουργία String για την κατάσταση της αναπαραγωγής
     private String status = "";
 
     // Δημιουργία αντικειμένου audioInputStream
@@ -73,7 +73,7 @@ public class Player {
         // Δημιουργία πραγματικού για την αποθήκευση των δευτερόλεπτων
         long seconds = clip.getMicrosecondLength() / MICROSECONDS_TO_SECONDS;
 
-        /* Αν τα δευτερόλεπτα είναι περισσότερα απο τα δευτερόλεπτα  μίας ώρας τότε αποθηκεύσει στο hours τα
+        /* Αν τα δευτερόλεπτα είναι περισσότερα απο τα δευτερόλεπτα  μίας ώρας τότε αποθηκεύει στο hours τα
         δευτερόλεπτα διά την σταθερά μετατροπής δευτερολέπτων σε ώρες, αλλιώς θέτει τις ώρες σε 00 */
         if (seconds >= HOURS_TO_SECONDS) {
             hours = seconds / HOURS_TO_SECONDS;
@@ -85,7 +85,7 @@ public class Player {
         // Αφαιρεί απο τα δευτερόλεπτα τις ώρες και τις αποθηκεύει στο minutes
         minutes = seconds - hours * HOURS_TO_SECONDS;
 
-        /* Αν τα δευτερόλεπτα είναι περισσότερα απο τα δευτερόλεπτα ενός λεπτού τότε αποθηκεύσει στο minutes τα
+        /* Αν τα δευτερόλεπτα είναι περισσότερα απο τα δευτερόλεπτα ενός λεπτού τότε αποθηκεύει στο minutes τα
         δευτερόλεπτα διά την σταθερά μετατροπής δευτερολέπτων σε λεπτά, αλλιώς θέτει τα λεπτά σε 00 */
         if (minutes >= MINUTES_TO_SECONDS) {
             minutes = minutes / MINUTES_TO_SECONDS;
@@ -95,7 +95,7 @@ public class Player {
             length += "00:";
         }
 
-        // Αφαιρεί απο τα δευτερόλεπτα τις ώρες και τα λεπτά και τα αποθηκεύσει στο restSeconds
+        // Αφαιρεί απο τα δευτερόλεπτα τις ώρες και τα λεπτά και τα αποθηκεύει στο restSeconds
         long restSeconds = seconds - hours * HOURS_TO_SECONDS - minutes *
                 MINUTES_TO_SECONDS;
 
@@ -141,20 +141,38 @@ public class Player {
 
     // Μέθοδος για το σταμάτημα της αναπαραγωγής
     public void stop() {
+        // Επαναφέρει το τωρινό μικροδευτερόλεπτο
         currentMicrosecond = 0L;
+
+        // Σταματάει την αναπαραγωγή
         clip.stop();
+
+        // Κλείνει το clip
         clip.close();
     }
 
     // Μέθοδος μεταπήδησης σε σημείο του clip
-    public void jump(long c) throws UnsupportedAudioFileException, IOException,
+    public void jump(long jumpTime) throws UnsupportedAudioFileException, IOException,
             LineUnavailableException {
-        if (c > 0 && c < clip.getMicrosecondLength()) {
+        /* Αν το jumpTime είναι μεγαλύτερο του 0 και το jumpTime είναι μικρότερο του μήκους του clip, τότε κάνει
+        μεταπήδηση στο jumpTime */
+        if (jumpTime > 0 && jumpTime < clip.getMicrosecondLength()) {
+            // Σταματάει την αναπαραγωγή
             clip.stop();
+
+            // Κλείνει το clip
             clip.close();
+
+            // Καλεί την μέθοδο resetAudioStream
             resetAudioStream();
-            currentMicrosecond = c;
-            clip.setMicrosecondPosition(c);
+
+            // Θέτει το τωρινό μικροδευτερόλεπτο στο jumpTime
+            currentMicrosecond = jumpTime;
+
+            // Θέτει τη θέση του clip στο jumpTime
+            clip.setMicrosecondPosition(jumpTime);
+
+            // Ξεκινάει την αναπαραγωγή
             this.play();
         }
     }
@@ -162,14 +180,20 @@ public class Player {
     // Μέθοδος για επαναφορά του AudioStream
     public void resetAudioStream() throws UnsupportedAudioFileException, IOException,
             LineUnavailableException {
+        // Θέτει το audioInputStream σύμφωνα με το αρχείου που είναι αποθηκευμένο στο filePath
         audioInputStream = AudioSystem.getAudioInputStream(
                 new File(filePath).getAbsoluteFile());
+
+        // Ανοίγει το clip σύμφωνα με το audioInputStream
         clip.open(audioInputStream);
     }
 
     // Μέθοδος για αλλαγή έντασης
     public void ChangeVolume(int value) {
+        // Δημιουργία FloatControl για την ένταση
         FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
+        // Θέτει την ένταση στο value
         volume.setValue(value);
     }
 }
