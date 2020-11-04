@@ -24,11 +24,11 @@ public class FileChooser {
         // Απενεργοποιεί την επιλογή κάθε αρχείου
         fileChooser.setAcceptAllFileFilterUsed(false);
 
-        // Δημιουργεί ένα αντικείμενο αρχείου
-        File selectedFile = null;
-
         // Δημιουργεί έναν ακέραιο με τον οποίο ελέγχουμε αν ο χρήστης πάτησε Open παρακάτω
         int returnValue = fileChooser.showOpenDialog(parent);
+
+        // Δημιουργεί ένα αντικείμενο αρχείου
+        File selectedFile = null;
 
         // Αν ο χρήστης πάτησε άνοιγμα τότε το αρχείο αποθηκεύεται στο selectedFile
         if (returnValue == JFileChooser.APPROVE_OPTION) {
