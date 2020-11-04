@@ -47,7 +47,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
 
     private void fileChooserButtonMouseClicked() {
         // Αποθηκεύει στο selectedFile το αρχείο που θα ανοίξει ο επιλογέας αρχείου
-        selectedFile = FileChooser.Choose();
+        selectedFile = FileChooser.Choose(this);
 
         // Αν δεν επιλέχθηκε αρχείο, τελειώνει η μέθοδος
         if (selectedFile == null) return;
@@ -117,7 +117,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                     player = new Player(files.get(fileList.getSelectedIndex()));
 
                     // Θέτει την ένταση του player σύμφωνα με την τιμή του JSlider volume
-                    player.ChangeVolume(volume.getValue());
+                    player.ChangeVolume(volumeSlider.getValue());
 
                     // Θέτει το endLabel ως το μήκος του wave αρχείου σε μορφή ΩΩ:ΛΛ:ΔΔ
                     this.endLabel.setText(player.getClipLengthString());
@@ -242,7 +242,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
     private void volumeStateChanged(javax.swing.event.ChangeEvent evt) {
         // Αν ο player δεν είναι κενός τότε αλλάζει την τιμή έντασης του σύμφωνα με την τιμή του JSlider volume
         if (player != null) {
-            player.ChangeVolume(volume.getValue());
+            player.ChangeVolume(volumeSlider.getValue());
         }
     }
 
@@ -297,7 +297,7 @@ public class WAVPlayerForm extends javax.swing.JFrame {
             timer.setPlayer(player);
 
             // Θέτει την ένταση του player
-            player.ChangeVolume(volume.getValue());
+            player.ChangeVolume(volumeSlider.getValue());
 
             // Κάνει αναπαραγωγή του νέου αρχείου
             player.play();
@@ -336,8 +336,8 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         JButton clearButton = new JButton();
         playButton = new javax.swing.JButton();
         JLabel playlistLabel = new JLabel();
-        JButton stopButton = new JButton();
-        volume = new javax.swing.JSlider();
+        JButton removeButton = new JButton();
+        volumeSlider = new javax.swing.JSlider();
         timerSlider = new javax.swing.JSlider();
         startLabel = new javax.swing.JLabel();
         endLabel = new javax.swing.JLabel();
@@ -401,20 +401,20 @@ public class WAVPlayerForm extends javax.swing.JFrame {
         playlistLabel.setFont(new java.awt.Font("Calibri", Font.BOLD, 11)); // NOI18N
         playlistLabel.setText("Playlist:");
 
-        stopButton.setFont(new java.awt.Font("Calibri", Font.PLAIN, 11)); // NOI18N
-        stopButton.setText("Remove Song");
-        stopButton.setFocusable(false);
-        stopButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        removeButton.setFont(new java.awt.Font("Calibri", Font.PLAIN, 11)); // NOI18N
+        removeButton.setText("Remove Song");
+        removeButton.setFocusable(false);
+        removeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RemoveButtonMouseClicked();
             }
         });
 
-        volume.setMajorTickSpacing(-6);
-        volume.setMaximum(0);
-        volume.setMinimum(-40);
-        volume.setFocusable(false);
-        volume.addChangeListener(this::volumeStateChanged);
+        volumeSlider.setMajorTickSpacing(-6);
+        volumeSlider.setMaximum(0);
+        volumeSlider.setMinimum(-40);
+        volumeSlider.setFocusable(false);
+        volumeSlider.addChangeListener(this::volumeStateChanged);
 
         timerSlider.setMajorTickSpacing(-6);
         timerSlider.setMaximum(0);
@@ -457,13 +457,13 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                                                 .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE,
                                                         105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE,
                                                         105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.
                                                         LEADING)
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGap(18, 18, 18)
-                                                                .addComponent(volume,
+                                                                .addComponent(volumeSlider,
                                                                         javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                         0, Short.MAX_VALUE))
                                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
@@ -533,14 +533,14 @@ public class WAVPlayerForm extends javax.swing.JFrame {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.
                                                         BASELINE)
                                                         .addComponent(clearButton)
-                                                        .addComponent(stopButton))
+                                                        .addComponent(removeButton))
                                                 .addGap(0, 6, Short.MAX_VALUE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.
                                                 createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(volumeLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(volume, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                .addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE,
                                                         javax.swing.GroupLayout.DEFAULT_SIZE,
                                                         javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap())
@@ -570,6 +570,6 @@ public class WAVPlayerForm extends javax.swing.JFrame {
     private javax.swing.JButton playButton;
     private javax.swing.JLabel startLabel;
     private javax.swing.JSlider timerSlider;
-    private javax.swing.JSlider volume;
+    private javax.swing.JSlider volumeSlider;
     // End of variables declaration                   
 }

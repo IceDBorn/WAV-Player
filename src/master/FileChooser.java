@@ -7,10 +7,9 @@ import javax.swing.filechooser.FileSystemView;
 
 public class FileChooser {
 
-    public static File Choose() {
+    public static File Choose(JFrame parent) {
         // Δημιουργεί επιλογέα αρχείου
-        JFileChooser fileChooser = new JFileChooser(FileSystemView.
-                getFileSystemView().getHomeDirectory());
+        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
         // Θέτει τον τίτλο του fileChooser σε Add wav audio file
         fileChooser.setDialogTitle("Add wav audio file");
@@ -19,20 +18,17 @@ public class FileChooser {
         FileNameExtensionFilter filter = new
                 FileNameExtensionFilter(".wav audio files", "wav", "wave");
 
-        // Απενεργοποιεί την επιλογή κάθε αρχείου
-        fileChooser.setAcceptAllFileFilterUsed(false);
-
         // Προσθέτει το φίλτρο αρχείων στον επιλογέα αρχείου
         fileChooser.setFileFilter(filter);
 
-        // Φέρνει τον επιλογέα αρχείου στο παρασκήνιο
-        fileChooser.setVisible(true);
+        // Απενεργοποιεί την επιλογή κάθε αρχείου
+        fileChooser.setAcceptAllFileFilterUsed(false);
 
         // Δημιουργεί ένα αντικείμενο αρχείου
         File selectedFile = null;
 
         // Δημιουργεί έναν ακέραιο με τον οποίο ελέγχουμε αν ο χρήστης πάτησε Open παρακάτω
-        int returnValue = fileChooser.showOpenDialog(null);
+        int returnValue = fileChooser.showOpenDialog(parent);
 
         // Αν ο χρήστης πάτησε άνοιγμα τότε το αρχείο αποθηκεύεται στο selectedFile
         if (returnValue == JFileChooser.APPROVE_OPTION) {
