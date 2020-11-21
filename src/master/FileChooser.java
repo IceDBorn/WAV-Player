@@ -24,7 +24,7 @@ public class FileChooser {
         // Απενεργοποιεί την επιλογή κάθε αρχείου
         fileChooser.setAcceptAllFileFilterUsed(false);
 
-        // Δημιουργεί έναν ακέραιο με τον οποίο ελέγχουμε αν ο χρήστης πάτησε Open παρακάτω
+        // Αποθηκεύει την κατάσταση του fileChooser στον ακέραιο returnValue και εμφανίζει τον fileChooser
         int returnValue = fileChooser.showOpenDialog(parent);
 
         // Δημιουργεί ένα αντικείμενο αρχείου

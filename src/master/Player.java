@@ -96,8 +96,7 @@ public class Player {
         }
 
         // Αφαιρεί απο τα δευτερόλεπτα τις ώρες και τα λεπτά και τα αποθηκεύει στο restSeconds
-        long restSeconds = seconds - hours * HOURS_TO_SECONDS - minutes *
-                MINUTES_TO_SECONDS;
+        long restSeconds = seconds - hours * HOURS_TO_SECONDS - minutes * MINUTES_TO_SECONDS;
 
         // Αποθηκεύει στο length το μήκος του αρχείου σε ΩΩ:ΛΛ:ΔΔ
         length += String.format("%02d", restSeconds);
