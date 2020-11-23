@@ -193,13 +193,34 @@ public class WAVPlayerForm extends javax.swing.JFrame {
 
     private void RemoveButtonMouseClicked() {
         // Σταματάει την αναπαραγωγή, αν ο player δεν είναι κενός
-        if (player != null) {
+        if (player != null && lastPlayedIndex == fileList.getSelectedIndex()) {
             player.stop();
 
             // Αν ο timerSlider είναι ενεργοποιημένος τότε τον απενεργοποιεί
             if (timerSlider.isEnabled()) {
                 timerSlider.setEnabled(false);
             }
+
+            // Επαναφορά του lastPlayedIndex
+            lastPlayedIndex = -1;
+
+            // Θέτει το κείμενο του playButton σε Play Song
+            playButton.setText("Play Song");
+
+            // Θέτει το lastPlayedText σε Play Song
+            lastPlayedText = "Play Song";
+
+            // Επαναφέρει το startLabel
+            startLabel.setText("00:00:00");
+
+            // Επαναφέρει το endLabel
+            endLabel.setText("00:00:00");
+
+            // Επαναφέρει την τιμή του timerSlider
+            timerSlider.setValue(0);
+
+            // Επαναφέρει την μέγιστη τιμή που μπορεί να δεχθεί ο timerSlider
+            timerSlider.setMaximum(0);
         }
 
         // Σβήνει το τελευταίο επιλεγμένο αρχείο απο την λίστα
@@ -216,27 +237,6 @@ public class WAVPlayerForm extends javax.swing.JFrame {
 
         // Προσθέτει το μοντέλο λίστας στην Jlist fileList
         fileList.setModel(fileListModel);
-
-        // Επαναφορά του lastPlayedIndex
-        lastPlayedIndex = -1;
-
-        // Θέτει το κείμενο του playButton σε Play Song
-        playButton.setText("Play Song");
-
-        // Θέτει το lastPlayedText σε Play Song
-        lastPlayedText = "Play Song";
-
-        // Επαναφέρει το startLabel
-        startLabel.setText("00:00:00");
-
-        // Επαναφέρει το endLabel
-        endLabel.setText("00:00:00");
-
-        // Επαναφέρει την τιμή του timerSlider
-        timerSlider.setValue(0);
-
-        // Επαναφέρει την μέγιστη τιμή που μπορεί να δεχθεί ο timerSlider
-        timerSlider.setMaximum(0);
     }
 
     private void volumeStateChanged(javax.swing.event.ChangeEvent evt) {
